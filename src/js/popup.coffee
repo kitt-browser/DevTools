@@ -42,9 +42,10 @@ angular.module('SourceCodeTree', ['truncate'])
   .controller 'SourceTreeController', ($scope, $timeout, MessengerService) ->
 
     $scope.displayTree = null
-    $scope.selectedNode = ""
+    $scope.selectedNode = null
 
-    $scope.nodeClicked = (e) ->
+    $scope.nodeClicked = (e, node) ->
+      $scope.selectedNode = node
       # TODO: This ought to be done via nganimate and model manipulation.
       children = $(e.target)
         .parent('li.parent_li')
@@ -85,9 +86,3 @@ angular.module('SourceCodeTree', ['truncate'])
       catch e
         attrs = ''
       return "#{name}#{attrs}"
-
-    $scope.isClient = (selectedNode) ->
-      return false unless selectedNode?
-      if selectedNode.device_name != undefined
-        return true
-      return false

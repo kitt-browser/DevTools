@@ -94,7 +94,7 @@ module.exports = (grunt) ->
         files: ['src/**/*.coffee', 'src/**/*.css']
         tasks: ['browserify:dev']
       other:
-        files: ['src/**/*.jade', 'src/img/**/*.*', 'src/manifest.json']
+        files: ['src/**/*.jade', 'src/**/*.html', 'src/img/**/*.*', 'src/manifest.json']
         tasks: ['copy', 'browserify:dev']
       test:
         files: ['src/**/*.coffee']

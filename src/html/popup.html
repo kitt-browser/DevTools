@@ -13,13 +13,13 @@
         <div ng-style="{'overflow': 'auto'}">
 
           <script type="text/ng-template" id="tree_item_renderer">
-            <span ng-click="nodeClicked($event)"  >
-              <i class="{{ switcher( isLeaf(data), '', 'icon-minus-sign' )}}"></i> 
+            <span ng-click="nodeClicked($event, data)">
+              <i></i> 
               {{showNode(data) | characters:20}}
             </span>
             <ul class="some" ng-show="data.show">       
               <li ng-repeat="data in data.nodes" class="parent_li"
-                ng-include="'tree_item_renderer'" tree-node></li>
+                ng-include="'tree_item_renderer'"></li>
             </ul>
           </script>
 
@@ -28,9 +28,14 @@
               <li ng-repeat="data in displayTree" ng-include="'tree_item_renderer'"></li>
             </ul>
           </div>
-          <div ng-show="!displayTree">
-            <div class="spinner">Parsing the DOM...</div>
+          <div ng-hide="displayTree">
+            <div class="spinner"></div>
+            <div>Parsing the DOM...</div>
+          </div>
         </div>
+      </div>
+      <div class="details">
+        {{selectedNode.html}}
       </div>
     </div>
 
