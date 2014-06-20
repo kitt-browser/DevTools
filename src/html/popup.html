@@ -1,0 +1,37 @@
+<!doctype html>
+<html ng-app="SourceCodeTree">
+  <head>
+    <script src="../js/popup.js"></script>
+
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" />
+  </head>
+
+  <body>
+
+    <div ng-controller="SourceTreeController">
+      <div class="span5 article-tree">
+        <div ng-style="{'overflow': 'auto'}">
+
+          <script type="text/ng-template" id="tree_item_renderer">
+            <span ng-click="nodeClicked($event)"  >
+              <i class="{{ switcher( isLeaf(data), '', 'icon-minus-sign' )}}"></i> 
+              {{showNode(data) | characters:20}}
+            </span>
+            <ul class="some" ng-show="data.show">       
+              <li ng-repeat="data in data.nodes" class="parent_li"
+                ng-include="'tree_item_renderer'" tree-node></li>
+            </ul>
+          </script>
+
+          <div class="tree well">
+            <ul>
+              <li ng-repeat="data in displayTree" ng-include="'tree_item_renderer'"></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
+

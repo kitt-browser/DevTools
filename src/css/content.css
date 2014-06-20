@@ -1,0 +1,10 @@
+.error {
+  color: red;
+}
+
+.log {
+}
+
+/*.warning:before {
+  content: url(../img/warning.png);
+}*/
