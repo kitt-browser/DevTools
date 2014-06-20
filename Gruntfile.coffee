@@ -80,7 +80,7 @@ module.exports = (grunt) ->
       dist:
         files: "<%= browserify.dev.files %>",
         options:
-          transform: ['coffeeify', 'cssify', 'jadeify', 'uglifyify']
+          transform: ['coffeeify', 'cssify', 'jadeify']
       test:
         src: ['src/js/*.spec.coffee'],
         dest: "#{BUILD}/test/browserified_tests.js",
