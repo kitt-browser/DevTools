@@ -7,6 +7,7 @@ require('../vendor/angular-truncate/truncate')
 # http://plnkr.co/edit/EvjX6O?p=preview
 
 require('../css/tree.css')
+require('../css/spinner.css')
 
 __i = 0
 
@@ -40,6 +41,7 @@ angular.module('SourceCodeTree', ['truncate'])
 
   .controller 'SourceTreeController', ($scope, $timeout, MessengerService) ->
 
+    $scope.displayTree = null
     $scope.selectedNode = ""
 
     $scope.nodeClicked = (e) ->

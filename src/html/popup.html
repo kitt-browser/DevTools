@@ -23,11 +23,13 @@
             </ul>
           </script>
 
-          <div class="tree well">
+          <div class="tree well" ng-show="displayTree">
             <ul>
               <li ng-repeat="data in displayTree" ng-include="'tree_item_renderer'"></li>
             </ul>
           </div>
+          <div ng-show="!displayTree">
+            <div class="spinner">Parsing the DOM...</div>
         </div>
       </div>
     </div>
