@@ -17,6 +17,7 @@
         "https://*/*"
       ],
       "js": [
+        "js/libs.js",
         "js/content.js"
       ]
     }

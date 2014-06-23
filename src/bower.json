@@ -4,7 +4,7 @@
     "jquery": "2.0.*",
     "bootstrap": "~3.1.1",
     "underscore": "~1.6.0",
-    "ionic": "~0.9.27",
+    "angular": "1.2.18",
     "angular-bootstrap": "~0.11.0",
     "angular-truncate": "*"
   },
@@ -16,19 +16,6 @@
         "mapping": [
           {
             "bower_components/jquery/jquery.min.js": "jquery.js"
-          }
-        ]
-      },
-      "ionic": {
-        "mapping": [
-          {
-            "bower_components/ionic/release/js/ionic.bundle.min.js": "ionic.bundle.js"
-          },
-          {
-            "bower_components/ionic/release/css/ionic.min.css": "css/ionic.css"
-          },
-          {
-            "bower_components/ionic/release/fonts/ionicons.svg": "fonts/ionicons.svg"
           }
         ]
       },

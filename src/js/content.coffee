@@ -1,5 +1,5 @@
-$ = require('../vendor/jquery/jquery')
-_ = require('../vendor/underscore/underscore')
+$ = require('jquery')
+_ = require('underscore')
 
 require('../css/content.css')
 

@@ -1,7 +1,7 @@
 $ = require('../vendor/jquery/jquery')
-_ = require('../vendor/underscore/underscore')
+_ = require('underscore')
 
-require('../vendor/angular/angular')
+require('angular')
 require('../vendor/angular-truncate/truncate')
 
 # http://plnkr.co/edit/EvjX6O?p=preview
