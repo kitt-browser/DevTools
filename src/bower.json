@@ -6,7 +6,8 @@
     "underscore": "~1.6.0",
     "angular": "1.2.18",
     "angular-bootstrap": "~0.11.0",
-    "angular-truncate": "*"
+    "angular-truncate": "*",
+    "angular-recursion": "~1.0.1"
   },
   "devDependencies": [],
   "install": {

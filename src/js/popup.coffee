@@ -3,6 +3,9 @@ _ = require('underscore')
 
 require('angular')
 require('../vendor/angular-truncate/truncate')
+require('../vendor/angular-recursion/angular-recursion')
+
+require('./element.coffee')
 
 # http://plnkr.co/edit/EvjX6O?p=preview
 
@@ -28,7 +31,7 @@ markParentNodes = ->
 $ ->
   console.log('popup ready')
 
-angular.module('SourceCodeTree', ['truncate'])
+angular.module('SourceCodeTree', ['truncate', 'RecursionHelper'])
 
   .service 'MessengerService', ->
     @sendMessage = (msg, callback) ->
@@ -39,12 +42,45 @@ angular.module('SourceCodeTree', ['truncate'])
     return this
 
 
+  .directive 'sourceNode', (RecursionHelper) ->
+    restrict: 'A'
+    scope:
+      data: '='
+      format: '='
+    template: """
+      <span ng-click="nodeClicked($event, data)">
+        <i></i> 
+        {{format}}
+      </span>
+      <ul class="some" ng-show="data.show">       
+        <li ng-repeat="data in data.nodes" class="parent_li"
+          source-node data="data" ng-click="nodeClicked($event, data)"
+          format="showNode(data)" ng-controller="NodeCtrl"></div>
+        </li>
+      </ul>
+    """
+    compile: (element) ->
+      RecursionHelper.compile element, (scope, element, attrs) ->
+        console.log 'scope', _.values scope.data
+
+
   .controller 'SourceTreeController', ($scope, $timeout, MessengerService) ->
 
     $scope.displayTree = null
     $scope.selectedNode = null
 
+    MessengerService.sendMessage {cmd: 'getDOM'}, ({tree}) ->
+      $scope.displayTree = [tree]
+      $timeout ->
+        console.log('marking parent nodes')
+        markParentNodes()
+      , 0
+   
+    
+  .controller 'NodeCtrl', ($scope) ->
+
     $scope.nodeClicked = (e, node) ->
+      console.log 'clicked node', node.name
       $scope.selectedNode = node
       # TODO: This ought to be done via nganimate and model manipulation.
       children = $(e.target)
@@ -66,14 +102,6 @@ angular.module('SourceCodeTree', ['truncate'])
           .removeClass('icon-plus-sign')
       e.stopPropagation()
 
-
-    MessengerService.sendMessage {cmd: 'getDOM'}, ({tree}) ->
-      $scope.displayTree = [tree]
-      $timeout ->
-        console.log('marking parent nodes')
-        markParentNodes()
-      , 0
-   
     $scope.showNode = (data) ->
       name = data.name
       $elem = $(data.html)
