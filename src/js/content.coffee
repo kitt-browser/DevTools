@@ -23,8 +23,10 @@ makeNode = ($elem) ->
     nodes: []
     html: $('<div>').append($node).html()
     element: $elem
-    name: $elem.prop('tagName')
-    show: true
+    tag: $elem.prop('tagName')
+    classes: $elem.attr('class')
+    id: $elem.attr('id')
+    show: false
   }
 
 

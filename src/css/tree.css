@@ -37,7 +37,7 @@
     top:25px;
     width:25px
 }
-.tree li span {
+.tree li span.node {
     -moz-border-radius:5px;
     -webkit-border-radius:5px;
     border:1px solid #999;
@@ -55,10 +55,29 @@
 .tree li:last-child::before {
     height:25px;
 }
+/*
 .tree li.parent_li>span:hover, .tree li.parent_li>span:hover+ul li span {
     background:#eee;
     border:1px solid #94a0b4;
     color:#000
+}
+*/
+
+.tree .node.parent.collapsed:before {
+  content: '\002B'
+}
+
+.tree .node.parent:before {
+  content: '\2212'
+}
+
+.tree .node .classes {
+  color: #4775FF;
+}
+
+.tree .node .id {
+  color: #00934A;
+  font-family: 'Courier New'
 }
 
 
@@ -67,3 +86,4 @@
   position: fixed;
   bottom:1px;
 }
+

@@ -15,9 +15,9 @@
 
           <div class="tree well" ng-show="displayTree">
             <ul>
-              <li ng-repeat="data in displayTree" 
-                source-node data="data" format="showNode(data)"
-                ng-click="nodeClicked($event, data)"
+              <li 
+                source-node data="displayTree"
+                ng-click="nodeClicked($event, displayTree)"
                 ng-controller="NodeCtrl"></li>
             </ul>
           </div>
