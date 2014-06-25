@@ -21,17 +21,16 @@ console.log = ->
   orig.apply(console, args)
 
 
-markParentNodes = ->
-  $('.tree li:has(ul)')
-    .addClass('parent_li')
-    .find(' > span')
-    .attr('title', 'Collapse this branch')
+linkParents = (root) ->
+  for node in root.nodes
+    node.parent = root
+    linkParents(node)
 
 
 $ ->
   console.log('popup ready')
 
-angular.module('SourceCodeTree', ['truncate', 'RecursionHelper'])
+angular.module('SourceCodeTree', ['truncate', 'SourceCodeTree.node'])
 
   .service 'MessengerService', ->
     @sendMessage = (msg, callback) ->
@@ -42,45 +41,79 @@ angular.module('SourceCodeTree', ['truncate', 'RecursionHelper'])
     return this
 
 
-  .directive 'sourceNode', (RecursionHelper) ->
-    restrict: 'A'
-    scope:
-      data: '='
-    template: """
-      <span ng-class="{node: true, parent: (data.nodes.length > 0), collapsed: !data.show}" ng-click="nodeClicked($event, data)">
-        <i></i> 
-        <span class="tag">{{data.tag}}</span>
-        <span class="id">{{data.id}}</span>
-        <span class="classes">{{data.classes}}</span>
-      </span>
-      <ul class="some" ng-show="data.show">       
-        <li ng-repeat="data in data.nodes" class="parent_li"
-          source-node data="data" ng-click="nodeClicked($event, data)"
-          ng-controller="NodeCtrl"></div>
-        </li>
-      </ul>
-    """
-    compile: (element) ->
-      RecursionHelper.compile element, (scope, element, attrs) ->
-
-
   .controller 'SourceTreeController', ($scope, $timeout, MessengerService) ->
 
     $scope.displayTree = null
     $scope.selectedNode = null
 
+    $scope.searchString = ''
+    $scope.searchResults = []
+    $scope.activeSearchResult = []
+
     MessengerService.sendMessage {cmd: 'getDOM'}, ({tree}) ->
+      #console.log 'tree', JSON.stringify(tree, null, 2)
+      linkParents(tree)
       $scope.displayTree = tree
+      $scope.$apply() unless $scope.$$phase
+
+    searchNodes = (root, searchString) ->
+      res = []
+      if root.html.match(new RegExp(searchString, 'ig'))
+        res = [root]
+      for node in root.nodes
+        res = res.concat(searchNodes(node, searchString))
+      return res
+
+    getRootPath = (node) ->
+      res = [node]
+      while _.last(res).parent
+        res.push _.last(res).parent
+      return res
+
+    jumpToNode = (node) ->
+      path = getRootPath(node)
+      console.log 'path to root', _.pluck path, 'tag'
+      # Expand all parent nodes.
+      _.each path, (node) -> node.collapsed = false
       $timeout ->
-        markParentNodes()
-      , 0
-   
-    
-  .controller 'NodeCtrl', ($scope) ->
 
-    $scope.nodeClicked = (e, node) ->
-      node.show = not node.show
+    $scope.$watch 'activeSearchResult', (newNode, oldNode) ->
+      oldNode?.activeSearchResult = false
+      if newNode?
+        newNode.activeSearchResult = true
+      $scope.selectedNode = $scope.activeSearchResult
+
+    $scope.$watch 'selectedNode', (newNode, oldNode) ->
+      console.log 'selectedNode', newNode?.tag
+      oldNode?.selected = false
+      if newNode?
+        newNode.selected = true
+        jumpToNode(newNode)
+
+    $scope.getSearchIndex = ->
+      return 0 unless $scope.searchResults.length > 0
+      console.log 'getSearchIndex'
+      $scope.searchResults.indexOf($scope.activeSearchResult)
+
+    $scope.prevSearchResult = ->
+      index = ($scope.getSearchIndex() - 1) % $scope.searchResults.length
+      $scope.activeSearchResult = $scope.searchResults[index]
+
+    $scope.nextSearchResult = ->
+      index = ($scope.getSearchIndex() + 1) % $scope.searchResults.length
+      $scope.activeSearchResult = $scope.searchResults[index]
+
+    $scope.$watch 'searchString', _.debounce (value) ->
+      if value.length == 0
+        $scope.searchResults = null
+        $scope.activeSearchResult = null
+        return
+
+      $scope.searchResults = searchNodes($scope.displayTree, value)
+      node = $scope.searchResults[0]
+      $scope.activeSearchResult = node
+      $scope.$apply() unless $scope.$$phase
+    , 1000
+
+    $scope.$on 'node:selected', (event, node) ->
       $scope.selectedNode = node
-      e.stopPropagation()
-
-    $scope.showNode = (data) ->

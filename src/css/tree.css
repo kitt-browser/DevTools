@@ -80,6 +80,11 @@
   font-family: 'Courier New'
 }
 
+.tree .node.selected {
+  border:1px solid red;
+  color: red;
+}
+
 
 .details {
   border: 1px black solid;

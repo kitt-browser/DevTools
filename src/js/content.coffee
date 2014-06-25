@@ -26,9 +26,10 @@ makeNode = ($elem) ->
     tag: $elem.prop('tagName')
     classes: $elem.attr('class')
     id: $elem.attr('id')
-    show: false
+    collapsed: true
+    selected: false
+    activeSearchResult: false
   }
-
 
 (($) ->
   chrome.runtime.onMessage.addListener (request, sender, sendResponse) ->
@@ -37,8 +38,7 @@ makeNode = ($elem) ->
       when 'getDOM'
         console.log '$html prepared'
         tree = parseDOM makeNode($('html'))
-        console.log 'tree', JSON.stringify(tree, null, 2)
-
+        console.log 'parsing done'
         sendResponse({tree: tree})
       else
         window.alert('Unknow command', request.cmd)

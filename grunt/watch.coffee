@@ -6,6 +6,7 @@ module.exports = {
       '<%= srcDir %>/**/*.jade'
       '<%= srcDir %>/img/**/*.*'
       '<%= srcDir %>/**/*.css'
+      '<%= srcDir %>/**/*.html'
       '<%= srcDir %>/manifest.json'
     ]
     tasks: ['test']

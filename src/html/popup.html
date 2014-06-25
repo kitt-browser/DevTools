@@ -10,6 +10,12 @@
   <body>
 
     <div ng-controller="SourceTreeController">
+      <div class="search">
+        <input type="text" ng-model="searchString"></input>
+        <span ng-if="activeSearchResult">{{getSearchIndex() + 1}}/{{searchResults.length}}</span>
+        <button type="button" ng-click="prevSearchResult()">prev</button>
+        <button type="button" ng-click="nextSearchResult()">next</button>
+      </div>
       <div class="span5 article-tree">
         <div ng-style="{'overflow': 'auto'}">
 
@@ -17,6 +23,7 @@
             <ul>
               <li 
                 source-node data="displayTree"
+                selectedNode="selectedNode"
                 ng-click="nodeClicked($event, displayTree)"
                 ng-controller="NodeCtrl"></li>
             </ul>
