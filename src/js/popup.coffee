@@ -56,26 +56,28 @@ angular.module('SourceCodeTree', ['truncate', 'SourceCodeTree.node'])
       $scope.displayTree = tree
       $scope.$apply() unless $scope.$$phase
 
-    searchNodes = (root, searchString) ->
+    # Returns all nodes whose `html` matches `searchRegexp`.
+    searchNodes = (root, searchRegexp) ->
       res = []
-      if root.html.match(new RegExp(searchString, 'ig'))
+      if root.html.match(new RegExp(searchRegexp, 'ig'))
         res = [root]
       for node in root.nodes
-        res = res.concat(searchNodes(node, searchString))
+        res = res.concat(searchNodes(node, searchRegexp))
       return res
 
+    # Get nodes on the path from `node` to root.
     getRootPath = (node) ->
       res = [node]
       while _.last(res).parent
         res.push _.last(res).parent
       return res
 
-    jumpToNode = (node) ->
+    # "Uncollapse" the nodes on the path from `node` to tree root.
+    expandPathToNode = (node) ->
       path = getRootPath(node)
       console.log 'path to root', _.pluck path, 'tag'
       # Expand all parent nodes.
       _.each path, (node) -> node.collapsed = false
-      $timeout ->
 
     $scope.$watch 'activeSearchResult', (newNode, oldNode) ->
       oldNode?.activeSearchResult = false
@@ -84,34 +86,45 @@ angular.module('SourceCodeTree', ['truncate', 'SourceCodeTree.node'])
       $scope.selectedNode = $scope.activeSearchResult
 
     $scope.$watch 'selectedNode', (newNode, oldNode) ->
-      console.log 'selectedNode', newNode?.tag
       oldNode?.selected = false
       if newNode?
+        # This will cause the node to be scrolled into view (see the
+        # `sourceNode` directive).
         newNode.selected = true
-        jumpToNode(newNode)
+        expandPathToNode(newNode)
 
+    # Returns the index of the active search result (so that we can
+    # display "you're seeing the n-th search result out f now").
     $scope.getSearchIndex = ->
       return 0 unless $scope.searchResults.length > 0
-      console.log 'getSearchIndex'
       $scope.searchResults.indexOf($scope.activeSearchResult)
 
+    # Go to next search result.
     $scope.prevSearchResult = ->
       index = ($scope.getSearchIndex() - 1) % $scope.searchResults.length
       $scope.activeSearchResult = $scope.searchResults[index]
 
+    # Go to previous search result.
     $scope.nextSearchResult = ->
       index = ($scope.getSearchIndex() + 1) % $scope.searchResults.length
       $scope.activeSearchResult = $scope.searchResults[index]
 
+    # Observe changes to `searchString` so that we can react to new searches.
+    # Note: We're debouncing so that there there's a delay between typing and
+    # searching.
     $scope.$watch 'searchString', _.debounce (value) ->
       if value.length == 0
+        # Search box wiped out. Reset.
         $scope.searchResults = null
         $scope.activeSearchResult = null
         return
 
+      # Let us search!
       $scope.searchResults = searchNodes($scope.displayTree, value)
       node = $scope.searchResults[0]
       $scope.activeSearchResult = node
+
+      # `$apply` because of debounce.
       $scope.$apply() unless $scope.$$phase
     , 1000
 
