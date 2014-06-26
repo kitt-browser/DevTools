@@ -8,51 +8,35 @@ module.exports = (grunt) ->
     ]
     options:
       transform: TRANSFORMS
-      alias: [
-        'src/vendor/jquery/jquery.js:jquery',
-        'src/vendor/angular/angular.js:angular'
-        'src/vendor/underscore/underscore.js:underscore'
-      ],
       external: [
-        'src/vendor/jquery/jquery.js',
-        'src/vendor/angular/angular.js'
-        'src/vendor/underscore/underscore.js'
+        'jquery'
+        'underscore'
+        'angular'
       ]
 
   dist:
     files: "<%= browserify.dev.files %>",
     options:
       transform: TRANSFORMS.concat([])
-      alias: "<%= browserify.dev.options.alias %>"
+      #alias: "<%= browserify.dev.options.alias %>"
       external: "<%= browserify.dev.options.external %>"
 
   test:
     src: ['<%= srcDir %>/js/*.spec.coffee'],
     dest: "<%= buildDir %>/test/browserified_tests.js",
     options:
-      # Embed source map for tests
+      watch: true
       debug: true
       transform: ['coffeeify', 'cssify']
-      alias: "<%= browserify.dev.options.alias %>"
+      #alias: "<%= browserify.dev.options.alias %>"
       external: "<%= browserify.dev.options.external %>"
 
   libs:
-    options:
-      shim:
-        jquery:
-          path: '<%= srcDir %>/vendor/jquery/jquery.js',
-          exports: '$'
-        underscore:
-          path: '<%= srcDir %>/vendor/underscore/underscore.js',
-          exports: '_'
-        angular:
-          path: '<%= srcDir %>/vendor/angular/angular.js',
-          exports: 'angular',
-          depends:
-            jquery: '$'
-    src: [
-      '<%= srcDir %>/vendor/jquery/jquery.js'
-      '<%= srcDir %>/vendor/angular/angular.js'
-      '<%= srcDir %>/vendor/underscore/underscore.js'
-    ],
+    src: []
     dest: "<%= buildDir %>/js/libs.js"
+    options:
+      alias: [
+        '<%= srcDir %>/vendor/jquery/jquery.js:jquery'
+        '<%= srcDir %>/vendor/angular/angular.js:angular'
+        '<%= srcDir %>/vendor/underscore/underscore.js:underscore'
+      ],
