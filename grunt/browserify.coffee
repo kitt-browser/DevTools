@@ -10,7 +10,7 @@ module.exports = (grunt) ->
       transform: TRANSFORMS
       external: [
         'jquery'
-        'underscore'
+        'lodash'
         'angular'
       ]
 
@@ -35,8 +35,8 @@ module.exports = (grunt) ->
     src: []
     dest: "<%= buildDir %>/js/libs.js"
     options:
-      alias: [
-        '<%= srcDir %>/vendor/jquery/jquery.js:jquery'
-        '<%= srcDir %>/vendor/angular/angular.js:angular'
-        '<%= srcDir %>/vendor/underscore/underscore.js:underscore'
-      ],
+      require: [
+        'jquery'
+        'lodash'
+        'angular'
+      ]

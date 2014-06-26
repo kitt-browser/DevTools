@@ -1,5 +1,5 @@
-$ = require('../vendor/jquery/jquery')
-_ = require('underscore')
+$ = require('jquery')
+_ = require('lodash')
 
 require('angular')
 require('../vendor/angular-truncate/truncate')
@@ -75,17 +75,19 @@ angular.module('SourceCodeTree', ['truncate', 'SourceCodeTree.node'])
     # "Uncollapse" the nodes on the path from `node` to tree root.
     expandPathToNode = (node) ->
       path = getRootPath(node)
-      console.log 'path to root', _.pluck path, 'tag'
       # Expand all parent nodes.
-      _.each path, (node) -> node.collapsed = false
+      for node in path
+        node.collapsed = false
 
     $scope.$watch 'activeSearchResult', (newNode, oldNode) ->
+      console.log 'active search result changed'
       oldNode?.activeSearchResult = false
       if newNode?
         newNode.activeSearchResult = true
       $scope.selectedNode = $scope.activeSearchResult
 
     $scope.$watch 'selectedNode', (newNode, oldNode) ->
+      console.log 'selected node changed', newNode
       oldNode?.selected = false
       if newNode?
         # This will cause the node to be scrolled into view (see the
@@ -101,7 +103,10 @@ angular.module('SourceCodeTree', ['truncate', 'SourceCodeTree.node'])
 
     # Go to next search result.
     $scope.prevSearchResult = ->
-      index = ($scope.getSearchIndex() - 1) % $scope.searchResults.length
+      currentIndex = $scope.getSearchIndex()
+      if currentIndex == 0
+        currentIndex = $scope.searchResults.length
+      index = (currentIndex - 1) % $scope.searchResults.length
       $scope.activeSearchResult = $scope.searchResults[index]
 
     # Go to previous search result.

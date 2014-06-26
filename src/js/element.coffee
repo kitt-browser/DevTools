@@ -1,4 +1,5 @@
-require('angular')
+$ = require('jquery')
+angular = require('angular')
 
 angular.module('SourceCodeTree.node', ['RecursionHelper'])
 
