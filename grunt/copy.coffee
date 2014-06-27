@@ -22,5 +22,10 @@ module.exports = (grunt) -> {
       src: ['**/*.html']
       cwd: 'src/html'
       dest: "<%= buildDir %>/html"
+    ,
+      expand: yes
+      src: ['iscroll/iscroll-lite.js']
+      cwd: 'src/vendor/'
+      dest: "<%= buildDir %>/js"
     ]
 }

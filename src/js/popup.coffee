@@ -9,7 +9,7 @@ require('./element.coffee')
 
 # http://plnkr.co/edit/EvjX6O?p=preview
 
-require('../css/tree.css')
+require('../css/devtools.css')
 require('../css/spinner.css')
 
 __i = 0
