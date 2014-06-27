@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/kitt-browser/reform",
   "devDependencies": {
+    "angular": "^1.2.18",
     "bower-installer": "^0.7.1",
     "chai": "^1.9.1",
     "coffeeify": "^0.6.0",
@@ -35,7 +36,9 @@
     "grunt-notify": "^0.3.0",
     "grunt-s3": "^0.2.0-alpha.3",
     "jadeify": "^2.3.0",
+    "jquery": "^2.1.1",
     "load-grunt-config": "^0.10.0",
+    "lodash": "^2.4.1",
     "minilog": "^2.0.4",
     "mocha": "^1.20.0",
     "sinon": "^1.10.1",
