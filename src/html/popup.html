@@ -7,37 +7,68 @@
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" />
   </head>
 
-  <body>
+  <body ng-controller="AppCtrl">
 
-    <div ng-controller="SourceTreeController">
-      <div class="search">
-        <input type="text" ng-model="searchString"></input>
-        <span ng-if="activeSearchResult">{{getSearchIndex() + 1}}/{{searchResults.length}}</span>
-        <button type="button" ng-click="prevSearchResult()">prev</button>
-        <button type="button" ng-click="nextSearchResult()">next</button>
-      </div>
-      <div class="span5 article-tree">
-        <div ng-style="{'overflow': 'auto'}">
+    <div ng-controller="TabsCtrl">
 
-          <div class="tree well" ng-show="displayTree">
-            <ul>
-              <li 
-                source-node data="displayTree"
-                selectedNode="selectedNode"
-                ng-click="nodeClicked($event, displayTree)"
-                ng-controller="NodeCtrl"></li>
-            </ul>
-          </div>
-          <div ng-hide="displayTree">
-            <div class="spinner"></div>
-            <div>Parsing the DOM...</div>
-          </div>
+      <tabset justified="true">
+        <tab heading="DOM">
+          <div ng-include="'tree_tab_view'"></div>
+        </tab>
+      
+        <tab heading="CSS">
+          <div ng-include="'css_tab_view'"></div>
+        </tab>
+      </tabset>
+
+    </div>
+
+
+<script type="text/ng-template" id="tree_tab_view">
+  <div ng-controller="SourceTreeController">
+    <div class="search">
+      <input type="text" ng-model="searchString"></input>
+      <span ng-if="activeSearchResult">{{getSearchIndex() + 1}}/{{searchResults.length}}</span>
+      <button type="button" ng-click="prevSearchResult()">prev</button>
+      <button type="button" ng-click="nextSearchResult()">next</button>
+    </div>
+    <div class="span5 article-tree">
+      <div ng-style="{'overflow': 'auto'}">
+
+        <div class="tree well" ng-show="displayTree">
+          <ul>
+            <li 
+              source-node data="displayTree"
+              selectedNode="selectedNode"
+              ng-click="nodeClicked($event, displayTree)"
+              ng-controller="NodeCtrl"></li>
+          </ul>
+        </div>
+        <div ng-hide="displayTree">
+          <div class="spinner"></div>
+          <div>Parsing the DOM...</div>
         </div>
       </div>
-      <div class="details">
-        {{selectedNode.html}}
-      </div>
     </div>
+    <div class="details">
+      {{selectedNode.html}}
+    </div>
+  </div>
+</script>
+
+
+<script type="text/ng-template" id="css_tab_view">
+<div ng-controller="CssViewCtrl">
+  <div ng-repeat="(selector, rules) in css">
+    <span>{{selector}}</span>: {
+    <span ng-repeat="(key, val) in rules">
+      <br>&nbsp;&nbsp;{{key}}:{{val}}
+    </span>
+    <br>}<br>
+  </div>
+</div>
+</script>
+
 
   </body>
 </html>

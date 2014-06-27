@@ -2,25 +2,23 @@ $ = require('jquery')
 _ = require('lodash')
 
 require('angular')
+require('../vendor/angular-bootstrap/ui-bootstrap-tpls')
 require('../vendor/angular-truncate/truncate')
 require('../vendor/angular-recursion/angular-recursion')
 
 require('./element.coffee')
+common = require('./common.coffee')
 
 # http://plnkr.co/edit/EvjX6O?p=preview
 
 require('../css/tree.css')
 require('../css/spinner.css')
 
-__i = 0
 
-orig = console.log
-console.log = ->
-  args = Array::slice.call(arguments, 0)
-  args.unshift(__i++)
-  orig.apply(console, args)
+log = common.log
 
 
+# Set `parent` attribute for each node.
 linkParents = (root) ->
   for node in root.nodes
     node.parent = root
@@ -28,30 +26,37 @@ linkParents = (root) ->
 
 
 $ ->
-  console.log('popup ready')
+  log('popup ready')
 
-angular.module('SourceCodeTree', ['truncate', 'SourceCodeTree.node'])
+angular.module('SourceCodeTree', ['truncate', 'SourceCodeTree.node', 'ui.bootstrap'])
 
-  .service 'MessengerService', ->
-    @sendMessage = (msg, callback) ->
-      chrome.tabs.query {active: true, currentWindow: true}, (tabs) ->
-        console.log('sending message to', tabs[0], msg)
-        chrome.tabs.sendMessage tabs[0].id, msg, callback
-
-    return this
+  .controller 'TabsCtrl', ->
+    null
 
 
-  .controller 'SourceTreeController', ($scope, $timeout, MessengerService) ->
+  .controller 'CssViewCtrl', ($scope) ->
+    $scope.$watch 'data.selectedNode', (newNode, oldNode) ->
+      return unless newNode?
+      common.sendMessage { cmd: 'node:selected', guid: newNode.guid }, (obj) ->
+        console.log obj
+        $scope.css = obj.css
+
+
+  .controller 'AppCtrl', ($scope) ->
+    $scope.data = {
+      selectedNode: null
+    }
+
+
+  .controller 'SourceTreeController', ($scope, $timeout) ->
 
     $scope.displayTree = null
-    $scope.selectedNode = null
 
     $scope.searchString = ''
     $scope.searchResults = []
     $scope.activeSearchResult = []
 
-    MessengerService.sendMessage {cmd: 'getDOM'}, ({tree}) ->
-      #console.log 'tree', JSON.stringify(tree, null, 2)
+    common.sendMessage {cmd: 'dom:get'}, ({tree}) ->
       linkParents(tree)
       $scope.displayTree = tree
       $scope.$apply() unless $scope.$$phase
@@ -80,14 +85,14 @@ angular.module('SourceCodeTree', ['truncate', 'SourceCodeTree.node'])
         node.collapsed = false
 
     $scope.$watch 'activeSearchResult', (newNode, oldNode) ->
-      console.log 'active search result changed'
+      log 'active search result changed'
       oldNode?.activeSearchResult = false
       if newNode?
         newNode.activeSearchResult = true
-      $scope.selectedNode = $scope.activeSearchResult
+      $scope.data.selectedNode = $scope.activeSearchResult
 
     $scope.$watch 'selectedNode', (newNode, oldNode) ->
-      console.log 'selected node changed', newNode
+      log 'selected node changed', newNode
       oldNode?.selected = false
       if newNode?
         # This will cause the node to be scrolled into view (see the
@@ -96,7 +101,7 @@ angular.module('SourceCodeTree', ['truncate', 'SourceCodeTree.node'])
         expandPathToNode(newNode)
 
     # Returns the index of the active search result (so that we can
-    # display "you're seeing the n-th search result out f now").
+    # display "you're seeing the n-th search result out of m now").
     $scope.getSearchIndex = ->
       return 0 unless $scope.searchResults.length > 0
       $scope.searchResults.indexOf($scope.activeSearchResult)
@@ -134,4 +139,4 @@ angular.module('SourceCodeTree', ['truncate', 'SourceCodeTree.node'])
     , 1000
 
     $scope.$on 'node:selected', (event, node) ->
-      $scope.selectedNode = node
+      $scope.data.selectedNode = node

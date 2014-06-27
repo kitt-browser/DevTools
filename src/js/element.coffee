@@ -1,5 +1,6 @@
 $ = require('jquery')
 angular = require('angular')
+common = require('./common.coffee')
 
 angular.module('SourceCodeTree.node', ['RecursionHelper'])
 
