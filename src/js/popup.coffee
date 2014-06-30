@@ -31,7 +31,7 @@ linkParents = (root) ->
 $ ->
   console.log('popup ready')
 
-angular.module('SourceCodeTree', ['truncate', 'SourceCodeTree.node', 'iScrollHelper'])
+angular.module('SourceCodeTree', ['truncate', 'SourceCodeTree.node', 'iScrollManager'])
 
   .service 'MessengerService', ->
     @sendMessage = (msg, callback) ->
@@ -41,7 +41,7 @@ angular.module('SourceCodeTree', ['truncate', 'SourceCodeTree.node', 'iScrollHel
 
     return this
 
-  .controller 'SourceTreeController', ($scope, $timeout, MessengerService) ->
+  .controller 'SourceTreeController', ($scope, $timeout, MessengerService, iScrollManager) ->
 
     $scope.displayTree = null
     $scope.selectedNode = null
@@ -135,3 +135,8 @@ angular.module('SourceCodeTree', ['truncate', 'SourceCodeTree.node', 'iScrollHel
 
     $scope.$on 'node:selected', (event, node) ->
       $scope.selectedNode = node
+      iScrollManager.refreshInstance 'tree'
+      iScrollManager.refreshInstance 'detail'
+
+    iScrollManager.createScrollbar 'tree', '.article-tree'
+    iScrollManager.createScrollbar 'detail', '.details'

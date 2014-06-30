@@ -3,7 +3,7 @@ angular = require('angular')
 
 angular.module('SourceCodeTree.node', ['RecursionHelper'])
 
-  .directive 'sourceNode', (RecursionHelper) ->
+  .directive 'sourceNode', (RecursionHelper, iScrollManager) ->
     restrict: 'A'
     scope:
       data: '='
@@ -14,7 +14,7 @@ angular.module('SourceCodeTree.node', ['RecursionHelper'])
         <span class="id">{{data.id}}</span>
         <span class="classes">{{data.classes}}</span>
       </span>
-      <ul class="some" ng-show="!data.collapsed">       
+      <ul class="some" ng-show="!data.collapsed">
         <li ng-repeat="data in data.nodes"
           source-node data="data" ng-click="nodeClicked($event, data)"
           ng-controller="NodeCtrl"></div>
@@ -25,10 +25,7 @@ angular.module('SourceCodeTree.node', ['RecursionHelper'])
       RecursionHelper.compile element, (scope, element, attrs) ->
         scope.$watch 'data.selected', (activated) ->
           return unless activated
-          $('html, body').animate {
-            scrollTop: $(element).offset().top
-          }, 500
-
+          iScrollManager.getInstance('tree').scrollToElement element[0]
 
   .controller 'NodeCtrl', ($scope) ->
     $scope.nodeClicked = (e, node) ->

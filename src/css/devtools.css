@@ -24,6 +24,13 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+/* TEST STYLES GET RID OF THEM */
+
+body {
+  width: 500px;
+  height: 300px;
+}
+
 ul {
   margin: 0;
 }
@@ -73,7 +80,6 @@ ul {
   -webkit-box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
-  background-color: #fafafa;
 }
 
 .search .search-wrapper {
@@ -233,4 +239,30 @@ ul {
 .tree .node.selected {
   border: 1px solid red;
   color: red;
+}
+
+/* Landscape */
+
+@media screen and (orientation:landscape) {
+  .search {
+    right: 150px;
+    width: auto;
+  }
+
+  .article-tree {
+    right: 150px;
+    width: auto;
+    bottom: 0;
+  }
+
+  .details {
+    top: 0;
+    bottom: 0;
+    height: auto;
+    right: 0;
+    width: 150px;
+    left: auto;
+    border-top: 0;
+    border-left: 1px solid #ccc;
+  }
 }
