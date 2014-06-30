@@ -12,6 +12,7 @@ module.exports = (grunt) -> {
   dev: [
     'clean'
     'connect:testing:server'
+    'copy'
 
     'browserify:libs'
     'browserify:test'
