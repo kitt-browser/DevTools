@@ -7,6 +7,7 @@ module.exports = (grunt) ->
       {src: '<%= srcDir %>/js/popup.coffee', dest: "<%= buildDir %>/js/popup.js"}
     ]
     options:
+      watch: true
       transform: TRANSFORMS
       external: [
         'jquery'
@@ -18,7 +19,6 @@ module.exports = (grunt) ->
     files: "<%= browserify.dev.files %>",
     options:
       transform: TRANSFORMS.concat([])
-      #alias: "<%= browserify.dev.options.alias %>"
       external: "<%= browserify.dev.options.external %>"
 
   test:
@@ -28,7 +28,6 @@ module.exports = (grunt) ->
       watch: true
       debug: true
       transform: ['coffeeify', 'cssify']
-      #alias: "<%= browserify.dev.options.alias %>"
       external: "<%= browserify.dev.options.external %>"
 
   libs:

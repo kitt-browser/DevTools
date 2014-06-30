@@ -11,21 +11,36 @@ module.exports = (grunt) -> {
           name: grunt.config('package.name')
           description: grunt.config('package.description')
         })
-  main:
+
+  vendor:
     files: [
       expand: yes
-      src: ['img/**']
-      cwd: 'src'
-      dest: "<%= buildDir %>"
-    ,
+      src: ['iscroll/iscroll-lite.js']
+      cwd: '<%= srcDir %>/vendor/'
+      dest: "<%= buildDir %>/js"
+    ]
+
+  img:
+    files: [
+      expand: yes
+      src: ['**']
+      cwd: '<%= srcDir %>/img'
+      dest: "<%= buildDir %>/img"
+    ]
+
+  css:
+    files: [
+     expand: yes
+     src: ['**/*.html']
+     cwd: '<%= srcDir %>/css'
+     dest: "<%= buildDir %>/css"
+    ]
+
+  html:
+    files: [
       expand: yes
       src: ['**/*.html']
-      cwd: 'src/html'
+      cwd: '<%= srcDir %>/html'
       dest: "<%= buildDir %>/html"
-    ,
-      expand: yes
-      src: ['iscroll/iscroll-lite.js']
-      cwd: 'src/vendor/'
-      dest: "<%= buildDir %>/js"
     ]
 }
