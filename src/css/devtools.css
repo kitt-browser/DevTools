@@ -24,13 +24,6 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-/* TEST STYLES GET RID OF THEM */
-
-body {
-  width: 500px;
-  height: 300px;
-}
-
 ul {
   margin: 0;
 }
@@ -64,7 +57,7 @@ ul {
   width: 100%;
   overflow: hidden;
   background-color: #fff;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #eee;
 }
 
 .search input {
@@ -108,13 +101,13 @@ ul {
   content: "";
   display: block;
   background-color: #bbb;
-  height: 4px;
-  width: 16px;
+  height: 2px;
+  width: 14px;
   transform-origin: 50% 50%;
   -webkit-transform-origin: 50% 50%;
   top: 50%;
   left: 50%;
-  margin: -2px 0 0 -8px;
+  margin: -1px 0 0 -7px;
   position: absolute;
 }
 
@@ -143,7 +136,7 @@ ul {
 /* DOM item details, full view */
 
 .details {
-  border-top: 1px solid #ccc;
+  border-top: 1px solid #eee;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -152,6 +145,9 @@ ul {
   overflow: hidden;
   background-color: #fafafa;
   padding: 0;
+  font-family: Consolas, monospace;
+  font-size: 12px;
+  word-break: break-all;
 }
 
 
@@ -243,7 +239,8 @@ ul {
 
 /* Landscape */
 
-@media screen and (orientation:landscape) {
+@media screen
+and (orientation:landscape) {
   .search {
     right: 150px;
     width: auto;
@@ -263,6 +260,6 @@ ul {
     width: 150px;
     left: auto;
     border-top: 0;
-    border-left: 1px solid #ccc;
+    border-left: 1px solid #eee;
   }
 }
