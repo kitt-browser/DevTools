@@ -23,7 +23,7 @@ angular.module('SourceCodeTree.node', ['RecursionHelper'])
     """
     compile: (element) ->
       RecursionHelper.compile element, (scope, element, attrs) ->
-        scope.$watch 'data.selected', (activated) ->
+        scope.$watch 'data.activeSearchResult', (activated) ->
           return unless activated
           iScrollManager.refreshInstance 'tree'
           iScrollManager.getInstance('tree').scrollToElement element[0]
