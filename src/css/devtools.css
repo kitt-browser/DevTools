@@ -237,6 +237,10 @@ ul {
   color: red;
 }
 
+.tree > ul {
+  padding-left: 0;
+}
+
 /* Landscape */
 
 @media screen
