@@ -2,13 +2,13 @@
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
-  src: local('Roboto Regular'), local('Roboto-Regular'), url(//themes.googleusercontent.com/static/fonts/roboto/v11/2UX7WLTfW3W8TclTUvlFyQ.woff) format('woff');
+  src: local('Roboto Regular'), local('Roboto-Regular'), url(http://themes.googleusercontent.com/static/fonts/roboto/v11/2UX7WLTfW3W8TclTUvlFyQ.woff) format('woff');
 }
 @font-face {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 700;
-  src: local('Roboto Bold'), local('Roboto-Bold'), url(//themes.googleusercontent.com/static/fonts/roboto/v11/d-6IYplOFocCacKzxwXSOD8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
+  src: local('Roboto Bold'), local('Roboto-Bold'), url(http://themes.googleusercontent.com/static/fonts/roboto/v11/d-6IYplOFocCacKzxwXSOD8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
 }
 
 html, body {
@@ -30,12 +30,20 @@ ul {
 
 /* Common */
 
+.dev-tools-wrapper {
+
+}
+
 .search,
-.tree,
+.article-tree,
 .details {
   padding: 0 10px;
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
+}
+
+.scrollable-wrapper {
+  padding: 10px;
 }
 
 /* Search field and navigation */
@@ -129,21 +137,28 @@ ul {
 /* DOM item details, full view */
 
 .details {
-  border-top: 1px solid #999;
+  border-top: 1px solid #ccc;
   position: fixed;
   bottom: 0;
   left: 0;
   height: 150px;
   width: 100%;
   overflow: hidden;
-  background-color: red;
+  background-color: #fafafa;
+  padding: 0;
 }
 
 
 /* DOM tree  */
 
-.tree {
-  background-color: #fbfbfb;
+.article-tree {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  top: 40px;
+  bottom: 150px;
+  overflow: hidden;
+  padding: 0;
 }
 
 .tree li {

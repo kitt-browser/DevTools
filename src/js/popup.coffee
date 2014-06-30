@@ -6,6 +6,7 @@ require('../vendor/angular-truncate/truncate')
 require('../vendor/angular-recursion/angular-recursion')
 
 require('./element.coffee')
+require('./scroll.coffee')
 
 # http://plnkr.co/edit/EvjX6O?p=preview
 
@@ -30,7 +31,7 @@ linkParents = (root) ->
 $ ->
   console.log('popup ready')
 
-angular.module('SourceCodeTree', ['truncate', 'SourceCodeTree.node'])
+angular.module('SourceCodeTree', ['truncate', 'SourceCodeTree.node', 'iScrollHelper'])
 
   .service 'MessengerService', ->
     @sendMessage = (msg, callback) ->
@@ -39,7 +40,6 @@ angular.module('SourceCodeTree', ['truncate', 'SourceCodeTree.node'])
         chrome.tabs.sendMessage tabs[0].id, msg, callback
 
     return this
-
 
   .controller 'SourceTreeController', ($scope, $timeout, MessengerService) ->
 

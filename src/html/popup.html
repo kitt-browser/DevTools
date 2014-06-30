@@ -11,7 +11,7 @@
 
   <body>
 
-    <div ng-controller="SourceTreeController">
+    <div class="dev-tools-wrapper" ng-controller="SourceTreeController">
 
       <div class="search">
         <div class="controls-wrapper">
@@ -25,9 +25,9 @@
 
       </div>
 
-      <div class="span5 article-tree">
-        <div>
-          <div class="tree well" ng-show="displayTree">
+      <div class="article-tree">
+        <div class="scrollable-wrapper" scrollable>
+          <div class="tree" ng-show="displayTree">
             <ul>
               <li 
                 source-node data="displayTree"
@@ -44,7 +44,9 @@
       </div>
 
       <div class="details">
-        {{selectedNode.html}}
+        <div class="scrollable-wrapper" scrollable>
+          {{selectedNode.html}}
+        </div>
       </div>
 
     </div>
