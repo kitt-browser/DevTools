@@ -1,7 +1,7 @@
 module.exports = (grunt) -> {
   default: [
     'clean'
-    'newer:copy'
+    'copy'
     'browserify:libs'
     'browserify:dist'
     'crx:main'
@@ -12,15 +12,19 @@ module.exports = (grunt) -> {
   dev: [
     'clean'
     'connect:testing:server'
+    'copy'
+
     'browserify:libs'
-    'concurrent:dev'
+    'browserify:test'
+    'browserify:dev'
+
     'mocha_phantomjs'
     'notify:build_complete'
+
     'watch'
   ]
 
   test: [
-    'concurrent:dev'
     'mocha_phantomjs'
     'notify:build_complete'
   ]
