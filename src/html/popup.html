@@ -43,8 +43,9 @@
         </div>
       </div>
 
-      <div class="details" scrollable>
-        <div class="scrollable-wrapper">
+      <div class="details" scrollable ng-controller="DetailsCtrl">
+        <div class="scrollable-wrapper"
+          ng-click="scrollToNode(selectedNode.guid)">
           {{selectedNode.html}}
         </div>
       </div>

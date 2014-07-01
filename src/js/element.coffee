@@ -1,14 +1,14 @@
 $ = require('jquery')
 angular = require('angular')
 
-angular.module('SourceCodeTree.node', ['RecursionHelper'])
+angular.module('SourceCodeTree.node', ['RecursionHelper', 'iScrollManager'])
 
   .directive 'sourceNode', (RecursionHelper, iScrollManager) ->
     restrict: 'A'
     scope:
       data: '='
     template: """
-      <span ng-class="{node: true, parent: (data.nodes.length > 0), collapsed: data.collapsed, selected: data.selected}" ng-click="nodeClicked($event, data)">
+      <span ng-class="{node: true, parent: (data.nodes.length > 0), collapsed: data.collapsed, selected: data.selected}" ng-click="nodeClicked($event, data)" id="{{data.guid}}">
         <i></i> 
         <span class="tag">{{data.tag}}</span>
         <span class="id">{{data.id}}</span>
