@@ -5,13 +5,6 @@ require('../css/content.css')
 
 _jQuery = $.noConflict(true)
 
-window.onerror = ->
-  console.log 'fooooooooo'
-  return 42
-
-sssdfdf()
-
-
 __i = 0
 
 orig = console.log
