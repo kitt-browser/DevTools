@@ -40,6 +40,15 @@ angular.module('SourceCodeTree', ['truncate', 'SourceCodeTree.node', 'iScrollMan
         chrome.tabs.sendMessage tabs[0].id, msg, callback
 
     return this
+   
+  .controller 'DetailsCtrl', ($scope, iScrollManager) ->
+    # It's not great to touch DOM in a controller but for simplicity
+    # sake we just scroll here.
+    $scope.scrollToNode = (id) ->
+      element = $("##{id}")
+      iScrollManager.refreshInstance 'tree'
+      iScrollManager.getInstance('tree').scrollToElement element[0]
+
 
   .controller 'SourceTreeController', ($scope, $timeout, MessengerService, iScrollManager) ->
 
