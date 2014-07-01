@@ -31,7 +31,7 @@ module.exports = (grunt) -> {
   css:
     files: [
      expand: yes
-     src: ['**/*.html']
+     src: ['**/*.css']
      cwd: '<%= srcDir %>/css'
      dest: "<%= buildDir %>/css"
     ]
