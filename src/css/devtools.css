@@ -44,6 +44,7 @@ ul {
 
 .scrollable-wrapper {
   padding: 10px;
+  position: absolute; /* this will allow the tree wrapper to correctly expand */
 }
 
 /* Search field and navigation */
@@ -161,6 +162,7 @@ ul {
   bottom: 150px;
   overflow: hidden;
   padding: 0;
+  font-size: 12px;
 }
 
 .tree li {
