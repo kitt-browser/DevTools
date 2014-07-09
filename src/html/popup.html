@@ -9,7 +9,7 @@
 
   </head>
 
-  <body>
+  <body class="detail-expanded">
 
     <div class="dev-tools-wrapper" ng-controller="SourceTreeController">
 
@@ -47,6 +47,9 @@
         <div class="scrollable-wrapper"
           ng-click="scrollToNode(selectedNode.guid)">
           {{selectedNode.html}}
+        </div>
+        <div class="detail-controls">
+          <span class="controls-block minimize-toggle"></span>
         </div>
       </div>
 

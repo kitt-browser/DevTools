@@ -149,3 +149,10 @@ angular.module('SourceCodeTree', ['truncate', 'SourceCodeTree.node', 'iScrollMan
 
     iScrollManager.createScrollbar 'tree', '.article-tree'
     iScrollManager.createScrollbar 'detail', '.details'
+
+    $('.minimize-toggle').on 'click', (e) ->
+      $('body').toggleClass 'detail-expanded'
+      $timeout (->
+        iScrollManager.refreshInstance 'tree'
+        iScrollManager.refreshInstance 'detail'
+      ), 350
