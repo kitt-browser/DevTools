@@ -22,6 +22,7 @@ body {
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
+  position: relative;
 }
 
 ul {
@@ -55,7 +56,7 @@ ul {
 
 .search {
   padding: 0;
-  position: fixed;
+  position: absolute;
   left: 0;
   top: 0;
   height: 30px;
@@ -142,7 +143,7 @@ ul {
 
 .details {
   border-top: 1px solid #eee;
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   height: 24px;
@@ -214,7 +215,7 @@ ul {
 /* DOM tree  */
 
 .article-tree {
-  position: fixed;
+  position: absolute;
   left: 0;
   width: 100%;
   top: 30px;
