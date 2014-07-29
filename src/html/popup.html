@@ -18,11 +18,12 @@
           <span class="btn-control btn-next" ng-click="nextSearchResult()">next</span>
           <span class="btn-control btn-prev" ng-click="prevSearchResult()">prev</span>
         </div>
+        <div class="pagination-wrapper">
+          <span ng-if="activeSearchResult">{{getSearchIndex() + 1}} of {{searchResults.length}}</span>
+        </div>
         <div class="search-wrapper">
           <input placeholder="Search DOM..." type="text" ng-model="searchString">
         </div>
-        <span ng-if="activeSearchResult">{{getSearchIndex() + 1}}/{{searchResults.length}}</span>
-
       </div>
 
       <div class="article-tree" scrollable>

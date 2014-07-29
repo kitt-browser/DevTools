@@ -89,6 +89,16 @@ ul {
   float: right;
 }
 
+.search .pagination-wrapper {
+  float: right;
+}
+
+.search .pagination-wrapper span {
+  line-height: 30px;
+  color: #ccc;
+  font-size: 12px;
+}
+
 .search .btn-control {
   height: 100%;
   line-height: 30px;
