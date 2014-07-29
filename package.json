@@ -1,21 +1,21 @@
 {
   "name": "DevTools",
   "version": "0.2.0",
-  "description": "DeveloperTools adds some shizzle to your form fizzle. For reals.",
+  "description": "Dev-tools extension allows you to conveniently browse webpage DOM from within Kitt browser.",
   "private": "true",
   "scripts": {
     "test": "grunt test"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/kitt-browser/reform.git"
+    "url": "git://github.com/kitt-browser/dev-tools.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/kitt-browser/reform/issues"
+    "url": "https://github.com/kitt-browser/dev-tools/issues"
   },
-  "homepage": "https://github.com/kitt-browser/reform",
+  "homepage": "https://github.com/kitt-browser/dev-tools",
   "devDependencies": {
     "angular": "^1.2.18",
     "bower-installer": "^0.7.1",
